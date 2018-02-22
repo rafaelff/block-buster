@@ -1,0 +1,66 @@
+#: kivy 1.9.1
+#: import NoTransition kivy.uix.screenmanager.NoTransition
+
+ScreenManager:
+    id: screen_manager
+    transition: NoTransition()
+    
+    MenuScreen:
+        id: menu_screen
+        name: 'menu'
+        manager: screen_manager
+        
+    LevelScreen:
+        id: level_screen
+        name: 'level'
+        manager: screen_manager
+
+<MenuScreen>:
+
+    BoxLayout:
+        orientation: 'vertical'
+        padding: '20dp', '20dp'
+        spacing: '5dp'
+
+        Label:
+            font_size: '60sp'
+            text: 'Block Buster'
+
+        Button:
+            text: 'Start Game'
+            on_press: root.load_game()
+
+        Button:
+            text: 'Level Selection'
+            on_press: root.manager.current = 'level'
+
+        Button:
+            text: 'Exit'
+            on_press: exit()
+            
+<LevelScreen>:
+
+    BoxLayout:
+        orientation: 'vertical'
+        padding: '20dp', '20dp'
+        spacing: '5dp'
+
+        Label:
+            font_size: '50sp'
+            text: 'Level selection'
+
+        Button:
+            text: 'Level 1'
+            on_press: root.load_level()
+
+        Button:
+            text: 'Level 5'
+            on_press: root.load_level('level5')
+
+        Button:
+            text: 'Level 10'
+            on_press: root.load_level('level10')
+
+        Button:
+            text: 'Back'
+            on_press: root.manager.current = 'menu'

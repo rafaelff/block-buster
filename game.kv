@@ -1,0 +1,110 @@
+#:kivy 1.9.1
+
+<Message>:
+    font_size: self.height / 2
+    color: 0, 0, 0, 1
+    center: self.parent.center
+    opacity: 0
+    width: self.parent.width
+    
+    canvas.before:
+        Color:
+            rgba: 1, 1, 1, 0.8
+        Rectangle:
+            pos: self.pos
+            size: self.size
+
+<PowerUp>:
+    size: '10dp', '10dp'
+    canvas:
+        Color:
+            rgb: 1, 1, 0
+        Ellipse:
+            pos: self.pos
+            size: self.size
+
+<Block>:
+    canvas:
+        Color:
+            rgb: 0, 0, 0
+        RoundedRectangle:
+            radius: [3,]
+            size: self.size
+            pos: self.pos
+        Color:
+            hsv: (self.score % 100) / 100, 1, 1
+        RoundedRectangle:
+            radius: [3,]
+            size: self.width - dp(2), self.height - dp(2)
+            pos: self.x + dp(1), self.y + dp(1)
+
+    Label:
+        text: str(root.curr_life)
+        center: root.center
+        color: 0, 0, 0, 1
+
+<GameBlocks>:
+    orientation: 'vertical'
+    canvas:
+        Color:
+            rgb: .2, .2, .2
+        Rectangle:
+            size: self.size
+            pos: self.pos
+
+<GameBall>:
+    size: '15dp', '15dp'
+    canvas:
+        Ellipse:
+            pos: self.pos
+            size: self.size
+
+<GamePaddle>:
+    size: '70dp', '10dp'
+    canvas:
+        Rectangle:
+            pos: self.pos
+            size: self.size
+
+<BlockBusterGame>:
+    ball: game_ball
+    player: player_bottom
+    game_blocks: game_blocks
+    message: message
+
+    GameBlocks:
+        id: game_blocks
+        width: root.width
+        height: root.height / 3
+        pos: 0, root.top - self.height - dp(30)
+    
+    Label:
+        font_size: '30sp'
+        x: dp(20)
+        y: 0
+        text: str(root.score)
+        
+    Label:
+        font_size: '30sp'
+        x: root.width -self.width
+        y: 0
+        text: str(root.life)
+    
+    GameBall:
+        id: game_ball
+        center_x: root.center_x
+        center_y: dp(70)
+        
+    GamePaddle:
+        id: player_bottom
+        center_x: root.center_x
+        y: root.y + dp(50)
+
+    Label:
+        font_size: '30sp'
+        center_x: root.center_x
+        top: root.top
+        text: root.title
+
+    Message:
+        id: message
